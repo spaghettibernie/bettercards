@@ -8,3 +8,6 @@ Probably adding more features soon, like blocking fast, etc. but not for now at 
 
 
 Much love!
+
+
+<img width="377" height="397" alt="image" src="https://github.com/user-attachments/assets/932dad75-3375-404b-96fa-e8eef9ff7628" />
