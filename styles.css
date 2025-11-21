@@ -1,0 +1,85 @@
+.bettercards-header {
+  height: 95px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: center;
+  background-color: #cfd9de;
+  z-index: 0;
+}
+
+.bettercards-header.loading {
+  background: linear-gradient(90deg, #cfd9de 0%, #e7e9eb 50%, #cfd9de 100%);
+  background-size: 200% 100%;
+  animation: bettercards-shimmer 1.5s infinite;
+}
+
+@keyframes bettercards-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.bettercards-modified-card {
+  position: relative !important;
+  overflow: hidden;
+  padding-top: 45px !important;
+}
+
+.bettercards-modified-card img {
+  flex-shrink: 0 !important;
+}
+
+.bettercards-modified-card [data-testid^="UserAvatar-Container"] {
+  position: relative;
+  z-index: 1;
+  border: 4px solid transparent !important;
+  border-radius: 50% !important;
+  background-color: transparent !important;
+}
+
+.bettercards-modified-card [data-testid^="UserAvatar-Container"] img {
+  border-radius: 50% !important;
+}
+
+.bettercards-modified-card [data-testid$="-unfollow"] {
+  background-color: #ffffff !important;
+  border: 1px solid #cfd9de !important;
+  color: #0f1419 !important;
+  font-weight: bold !important;
+  min-width: 0 !important;
+}
+
+.bettercards-modified-card [data-testid$="-unfollow"]:hover {
+  background-color: rgba(244, 33, 46, 0.1) !important;
+  border-color: #f4212e !important;
+  color: #f4212e !important;
+}
+
+.bettercards-modified-card [data-testid$="-follow"] {
+  background-color: #0f1419 !important;
+  color: #ffffff !important;
+  border: 1px solid #0f1419 !important;
+  font-weight: 700 !important;
+  min-width: 76px !important;
+  height: 32px !important;
+  padding: 0 16px !important;
+  box-sizing: border-box !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.bettercards-modified-card [data-testid$="-follow"]:hover {
+  background-color: #272c30 !important;
+  border-color: #272c30 !important;
+}
+
+@media (prefers-color-scheme: light) {
+  .bettercards-modified-card [data-testid^="UserAvatar-Container"] {
+    border-color: rgb(255, 255, 255);
+  }
+}
