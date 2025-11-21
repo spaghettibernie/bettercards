@@ -9,16 +9,18 @@ Probably adding more features soon, like blocking fast, etc. but not for now at 
 
 Much love!
 
-<img width="377" height="397" alt="image" src="https://github.com/user-attachments/assets/932dad75-3375-404b-96fa-e8eef9ff7628" />
-
 ## How to Install
 
 Since this extension isn't on the Chrome Web Store yet, you'll need to install it manually. Don't worry, it's super easy:
 
 1.  [**Download**](https://github.com/spaghettibernie/bettercards/archive/refs/heads/main.zip) the code (Clone the repo or download the ZIP and extract it).
 2.  Open Chrome and navigate to `chrome://extensions`, you have to take this and paste it onto your URL (or click the puzzle piece icon at the end of your URL bar -> Manage Extensions).
-3.  Toggle **Developer mode** on in the top right corner.
-4.  Click **Load unpacked** in the top left.
-5.  Select the folder where you downloaded/extracted the extension.
+   < img width="261" height="102" alt="image" src="https://github.com/user-attachments/assets/2b05c762-c0b6-4cf8-8b64-1c886be082d4" />
+4.  Toggle **Developer mode** on in the top right corner.
+5.  Click **Load unpacked** in the top left.
+6.  Select the folder where you downloaded/extracted the extension.
 
 That's it! You're ready to go.
+
+<img width="377" height="397" alt="image" src="https://github.com/user-attachments/assets/932dad75-3375-404b-96fa-e8eef9ff7628" />
+
