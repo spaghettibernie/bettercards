@@ -56,7 +56,7 @@
 }
 
 .bettercards-modified-card [data-testid$="-unfollow"]:hover {
-  background-color: rgba(244, 33, 46, 0.1) !important;
+  background-color: rgba(244, 33, 46, 0.3) !important;
   border-color: #f4212e !important;
   color: #f4212e !important;
 }

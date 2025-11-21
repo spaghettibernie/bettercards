@@ -17,7 +17,7 @@ window.addEventListener('message', (event) => {
     CACHE.set(username, fullUrl);
     
     const card = document.querySelector('[data-testid="HoverCard"]');
-    if (card && card.dataset.betterCardsUsername === username) {
+    if (card && card.dataset.bettercardsUsername === username) {
         updateCardHeader(card, fullUrl);
     }
   }
@@ -49,19 +49,19 @@ if (layers !== document.body) {
 }
 
 async function handleHoverCard(card) {
-  if (card.dataset.betterCardsProcessed) return;
+  if (card.dataset.bettercardsProcessed) return;
 
   // Find the username
   const username = extractUsername(card);
   if (!username) {
     // Content might not be loaded yet (skeleton state).
     // Observe the card for changes and retry.
-    if (!card.dataset.betterCardsObserving) {
-        card.dataset.betterCardsObserving = 'true';
+    if (!card.dataset.bettercardsObserving) {
+        card.dataset.bettercardsObserving = 'true';
         const retryObserver = new MutationObserver((mutations, obs) => {
             if (extractUsername(card)) {
                 obs.disconnect();
-                delete card.dataset.betterCardsObserving;
+                delete card.dataset.bettercardsObserving;
                 handleHoverCard(card);
             }
         });
@@ -70,8 +70,8 @@ async function handleHoverCard(card) {
     return;
   }
   
-  card.dataset.betterCardsProcessed = 'true';
-  card.dataset.betterCardsUsername = username; // Store for callback
+  card.dataset.bettercardsProcessed = 'true';
+  card.dataset.bettercardsUsername = username; // Store for callback
 
   // Prepare the card structure immediately
   prepareCardUI(card);
@@ -80,7 +80,8 @@ async function handleHoverCard(card) {
   const headerDiv = card.querySelector('.bettercards-header');
   if (headerDiv) {
       headerDiv.classList.add('loading');
-      headerDiv.style.backgroundImage = 'none';
+      headerDiv.style.backgroundImage = '';
+      headerDiv.style.removeProperty('background-image');
       headerDiv.style.backgroundColor = '#cfd9de';
   }
 
@@ -143,84 +144,6 @@ function prepareCardUI(card) {
           container.appendChild(headerDiv);
       }
   }
-  
-  // Ensure buttons have z-index to sit above header and are positioned correctly
-  const actionSelectors = [
-      '[data-testid$="-follow"]',
-      '[data-testid$="-unfollow"]',
-      '[data-testid="editProfileButton"]'
-  ];
-  
-  let mainActionBtn = null;
-  for (const sel of actionSelectors) {
-      mainActionBtn = card.querySelector(sel);
-      if (mainActionBtn) break;
-  }
-
-  if (mainActionBtn && avatar) {
-      // Find the container that holds all the buttons (Follow, Message, Menu, etc.)
-      // Usually it's a flex row. We traverse up from the Follow button.
-      let btnContainer = mainActionBtn.parentElement;
-      
-      // Heuristic: Go up until we hit a container that is a direct child of the main card container
-      // or until we find a container that has multiple children (the buttons).
-      // Twitter's structure is usually: Card -> ... -> Row -> [Button, Button, Button]
-      
-      // We'll try to find the row wrapper.
-      // It usually doesn't contain the avatar.
-      while (btnContainer && btnContainer !== container) {
-          if (btnContainer.parentElement === container) break;
-          // If this container has the avatar, we went too far (or structure is different)
-          if (btnContainer.contains(avatar)) break; 
-          
-          // Check if this container has the "More" menu button
-          if (btnContainer.querySelector('[data-testid="userActions"]')) {
-              break; // Found the container that holds the menu!
-          }
-          
-          btnContainer = btnContainer.parentElement;
-      }
-
-      if (btnContainer && !btnContainer.contains(avatar)) {
-          btnContainer.style.position = 'absolute';
-          btnContainer.style.top = '12px';
-          btnContainer.style.right = '12px';
-          btnContainer.style.zIndex = '10'; // High z-index to ensure clickable
-          // Remove any margins that might displace it
-          btnContainer.style.marginTop = '0';
-          btnContainer.style.marginRight = '0';
-          // Stack buttons vertically
-          btnContainer.style.display = 'flex';
-          btnContainer.style.flexDirection = 'column';
-          btnContainer.style.alignItems = 'flex-end';
-          btnContainer.style.gap = '8px';
-          
-          btnContainer.style.pointerEvents = 'auto';
-          
-          // Ensure overflow is visible for dropdowns (Menu)
-          btnContainer.style.overflow = 'visible';
-      }
-  } else {
-      // Buttons might not be loaded yet. Observe and retry.
-      if (!card.dataset.betterCardsWaitingForButtons) {
-          card.dataset.betterCardsWaitingForButtons = 'true';
-          const btnObserver = new MutationObserver((mutations, obs) => {
-              let found = false;
-              for (const sel of actionSelectors) {
-                  if (card.querySelector(sel)) {
-                      found = true;
-                      break;
-                  }
-              }
-              if (found) {
-                  obs.disconnect();
-                  delete card.dataset.betterCardsWaitingForButtons;
-                  prepareCardUI(card);
-              }
-          });
-          btnObserver.observe(card, { childList: true, subtree: true });
-      }
-  }
 }
 
 function updateCardHeader(card, url) {
@@ -231,8 +154,9 @@ function updateCardHeader(card, url) {
       headerDiv.style.backgroundImage = `url(${url})`;
     } else {
       // Default background if no banner
+      headerDiv.style.backgroundImage = '';
+      headerDiv.style.removeProperty('background-image');
       headerDiv.style.backgroundColor = '#cfd9de'; // Standard Twitter gray
-      headerDiv.style.backgroundImage = 'none';
     }
   }
 }

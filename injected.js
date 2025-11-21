@@ -7,16 +7,22 @@
     return key ? dom[key] : null;
   }
 
-  function findUserInFiber(fiber) {
+  function findUserInFiber(fiber, targetUsername) {
     let curr = fiber;
     while (curr) {
       const props = curr.memoizedProps;
       if (props) {
-        if (props.user && props.user.profile_banner_url) {
-          return props.user;
+        let user = null;
+        // Check various locations where user data might be stored
+        if (props.user) {
+          user = props.user;
+        } else if (props.data && props.data.user && props.data.user.result && props.data.user.result.legacy) {
+             user = props.data.user.result.legacy;
         }
-        if (props.data && props.data.user && props.data.user.result && props.data.user.result.legacy) {
-             return props.data.user.result.legacy;
+        
+        // STRICT CHECK: Ensure the user object actually belongs to the username we are hovering
+        if (user && user.screen_name && user.screen_name.toLowerCase() === targetUsername.toLowerCase()) {
+            return user;
         }
       }
       curr = curr.return;
@@ -37,14 +43,14 @@
         return;
     }
     
-    let user = findUserInFiber(fiber);
+    let user = findUserInFiber(fiber, username);
     
     if (!user) {
         const avatar = hoverCard.querySelector('[data-testid^="UserAvatar-Container"]');
         if (avatar) {
             const avatarFiber = getReactFiber(avatar);
             if (avatarFiber) {
-                user = findUserInFiber(avatarFiber);
+                user = findUserInFiber(avatarFiber, username);
             }
         }
     }
